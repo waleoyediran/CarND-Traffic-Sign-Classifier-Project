@@ -124,10 +124,10 @@ Here are the results of the prediction:
 | Image			        |     Prediction	        					| 
 |:---------------------:|:---------------------------------------------:| 
 | 30 km/h Zone   	  	| End of all speed and passing limits   		| 
-| 60 km/h ZOne 			| U-turn 										|
-| No Entry				| Yield											|
-| Turn right ahead  	| Bumpy Road					 				|
-| Keep Right			| Slippery Road      							|
+| 60 km/h Zone 			| 60 km/h Zone 									|
+| No Entry				| No Entry 										|
+| Turn right ahead  	| Turn right ahead				 				|
+| Keep Right			| Keep right         							|
 
 
 The model was able to correctly guess 4 of the 5 traffic signs, which gives an accuracy of 80%. This compares favorably to the accuracy on the test set of 92% from the training
@@ -135,6 +135,7 @@ The model was able to correctly guess 4 of the 5 traffic signs, which gives an a
 #### 3. Softmax Probabilities 
 The model is provides a very high degree of probabilities when predicting new images.
 
+```
 1:
  32: 97.97%
  1: 1.99%
@@ -165,6 +166,7 @@ The model is provides a very high degree of probabilities when predicting new im
  13: 0.00%
  36: 0.00%
  0: 0.00%
+ ```
 
 
 
