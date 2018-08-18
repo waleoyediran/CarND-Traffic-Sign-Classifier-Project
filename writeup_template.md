@@ -1,8 +1,6 @@
 # **Traffic Sign Recognition** 
 
-## Writeup
-
-### You can use this file as a template for your writeup if you want to submit it as a markdown file, but feel free to use some other method and submit a pdf if you prefer.
+## Project Writeup
 
 ---
 
@@ -59,17 +57,11 @@ Here is an exploratory visualization of the data set. It is a bar chart showing 
 
 #### 1. Data Preproceessing techniques
 
-As a first step, I decided to convert the images to grayscale because ...
-
-Here is an example of a traffic sign image before and after grayscaling.
-
-![alt text][image2]
-
 As a last step, I normalized the image data because ...
 
-I chose to generate additional augmented data because tests showed that augmenting the dataset achieved better results than tuning the hyperparameters of the network
+I chose to generate additional augmented data because tests showed that the model performed significantly better with more dataset
 
-To add more data to the the data set, I used basically generated additional 2 rotated versions of the original images, by rotating the images st +5 and -% degrees.
+To add more data to the the data set, I used basically generated additional 2 rotated versions of the original images, by rotating the images st +5 and -5 degrees.
 
 
 
@@ -81,12 +73,19 @@ My final model consisted of the following layers:
 |:---------------------:|:---------------------------------------------:| 
 | Input         		| 32x32x3 RGB image   							| 
 | Convolution 5x5     	| 1x1 stride, same padding, outputs 28x28x6 	|
+| Activation			| RELU      									|
 | Max pooling			| Reduces the size to 14x14x6					|
-| RELU					|												|
 | Convolution 5x5     	| Input 14x14x6, outputs 10x10x6 				|
-| Fully Connected + RELU| None-Linear - output - 267					|
-| Fully Connected + RELU| None-Linear - output - 178					|
-| Fully Connected + RELU| None-Linear - output - 43		  				|
+| Activation			| RELU      									|
+| Max pooling			| Reduces the size to 5x5x16					|
+| Flatten   			| Output is 400             					|
+| Fully Connected       | None-Linear - output - 120					|
+| Activation			| RELU      									|
+| Dropout   			|             									|
+| Fully Connected       | None-Linear - output - 84 					|
+| Activation			| RELU      									|
+| Dropout   			|             									|
+| Fully Connected + RELU| None-Linear - output - 43	(Class Size) 		|
 |						|												|
 |						|												|
  
@@ -94,15 +93,26 @@ My final model consisted of the following layers:
 
 #### 3. Training Approach
 
-To train the model, I used an the LetNet architecture
-I used the configuration
-EPOCHS = 20
-BATCH_SIZE = 256
+To train the model, I used a model based of the LeNet architecture.
+I used the AdamOptimizer, using a Batch size of 256 and ran 20 Epochs.
+I found that using a learning rate of 0,001 provided best results.
 
 #### Training Discussion
 
 My final model results:
-* Test set accuracy of .91
+* Validation set accuracy of 93.4%
+* Training set accuracy of 98.9%
+* Test set accuracy of 92.3%
+
+I iteratively adjusted the parameters and approaches to achieve the results described here.
+I figured that the model performed much better with more data set, I augmented the input images by generating slightly rotated
+version of the images (Rotating by about +5 and -5 degrees of each image)
+
+I struggled with over-fitting, where the model performed well in test data, but did very badly with the validation dataset.
+Adding a dropout of 0.7 improved the accuracy of both the validation and training set.
+I tried running with 5, 10, 15, 20, 25 epochs, and settled for 20 epochs.
+
+I found the learning rate of 0.001 to be just fine.
 
  
 
@@ -111,11 +121,13 @@ My final model results:
 #### 1. Choice of new Images
 
 Here are five German traffic signs that I found on the web:
+This images were randomly selected across a couple of sources
 
 ![alt text][image4] ![alt text][image5] ![alt text][image6] 
 ![alt text][image7] ![alt text][image8]
 
-The first image might be difficult to classify because ...
+I find that the model should not find it difficult to classify these images as they are sufficiently bright
+and properly aligned; I cropped the images to remove most of the irrelevant background.
 
 #### 2. Predictions
 
@@ -137,35 +149,35 @@ The model is provides a very high degree of probabilities when predicting new im
 
 ```
 1:
- 32: 97.97%
- 1: 1.99%
- 38: 0.04%
- 6: 0.00%
- 36: 0.00%
-3:
- 3: 100.00%
+ 1: 100.00%
+ 32: 0.00%
  2: 0.00%
- 10: 0.00%
- 5: 0.00%
+ 6: 0.00%
+ 13: 0.00%
+3:
+ 3: 99.75%
+ 9: 0.14%
+ 32: 0.11%
  1: 0.00%
+ 0: 0.00%
 17:
  17: 100.00%
- 14: 0.00%
+ 0: 0.00%
  22: 0.00%
- 1: 0.00%
+ 14: 0.00%
  26: 0.00%
 33:
- 33: 100.00%
- 28: 0.00%
+ 33: 98.79%
+ 35: 1.21%
+ 40: 0.00%
  39: 0.00%
- 12: 0.00%
- 24: 0.00%
+ 9: 0.00%
 38:
  38: 100.00%
- 34: 0.00%
+ 40: 0.00%
  13: 0.00%
  36: 0.00%
- 0: 0.00%
+ 39: 0.00%
  ```
 
 
